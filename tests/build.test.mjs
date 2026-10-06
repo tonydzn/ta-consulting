@@ -40,7 +40,7 @@ test('Todas as rotas têm HTML estático, H1 único, canonical próprio e JSON-L
   const titles=new Set();
   for(const [route,html] of pages){
     assert.equal((html.match(/<h1[ >]/g)||[]).length,1,route);
-    assert(html.includes(`<link rel="canonical" href="https://www.tonyananias.com.br${route}">`),route);
+    assert(html.includes(`<link rel="canonical" href="https://tonyananias.com.br${route}">`),route);
     assert(html.includes('<html lang="pt-BR">'));
     const title=html.match(/<title>(.*?)<\/title>/)[1];assert(!titles.has(title));titles.add(title);
     const json=JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);
@@ -87,7 +87,7 @@ test('Links locais e âncoras antigas resolvem em páginas existentes',()=>{
 
 test('SEO de serviços usa intenção própria, canonical do host final e breadcrumbs da navegação',()=>{
   const pages=createPages();
-  assert.equal(site.origin,'https://www.tonyananias.com.br');
+  assert.equal(site.origin,'https://tonyananias.com.br');
   const descriptions=new Set();
   for(const service of services){
     const path=`/${service.slug}/`,html=pages.get(path);
@@ -99,7 +99,7 @@ test('SEO de serviços usa intenção própria, canonical do host final e breadc
     assert.deepEqual(trail.map(x=>x.item),[site.origin+'/',site.origin+'/servicos/',site.origin+path]);
     assert.equal(graph.find(x=>x['@type']==='WebPage').mainEntity['@id'],site.origin+path+'#service');
     assert.equal(graph.find(x=>Array.isArray(x['@type'])).telephone,'+5518981034411');
-    assert(!html.includes('https://tonyananias.com.br/'));
+    assert(!html.includes('https://www.tonyananias.com.br'));
   }
 });
 

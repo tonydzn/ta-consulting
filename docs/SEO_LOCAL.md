@@ -4,7 +4,7 @@ Atualizado em 29/09/2026. Área comercial confirmada: Presidente Prudente e muni
 
 ## Situação verificada
 
-- O domínio público sem `www` responde com 308 para `https://www.tonyananias.com.br/`, que responde 200. Cabeçalhos identificam Vercel.
+- Host canônico: `https://tonyananias.com.br/` (sem `www`), definido em 06/10/2026. Na Vercel, o domínio sem `www` é o principal e `www` redireciona para ele. Antes dessa data, o redirecionamento era o inverso.
 - O HTML público consultado ainda tem o título “TA Consulting | Tráfego Pago, Automação e IA” e canonical sem `www`. A nova versão permanece local até publicação.
 - Consulta disponível ao Search Console via Markifact retornou `No gsc connection found`. Não há métricas de cliques, impressões, posição ou cobertura para estabelecer uma linha de base. Resultados de busca abertos durante a pesquisa não são um relatório de posição do Google.
 - Perfil da Empresa, endereço de atendimento presencial e horários ainda não foram fornecidos. Não foram inventados endereço, avaliações, coordenadas ou filiais.
@@ -43,7 +43,7 @@ Hipóteses de intenção, sem volume ou dificuldade de palavra-chave medidos. Pr
 
 1. Publicar o build `dist/` no projeto correto da Vercel. Manter o redirecionamento público sem `www` para `www`, sem inverter os dois hosts.
 2. Confirmar 200 nas páginas, 404 real em endereço inexistente e redirecionamentos de barra final. Não configurar um fallback de todas as URLs para a home.
-3. Verificar a propriedade no Search Console. Enviar `https://www.tonyananias.com.br/sitemap.xml` e inspecionar home, tráfego pago, Google Ads, SEO local e atendimento regional.
+3. Verificar a propriedade no Search Console. Enviar `https://tonyananias.com.br/sitemap.xml` e inspecionar home, tráfego pago, Google Ads, SEO local e atendimento regional.
 4. Confirmar canonical escolhido pelo Google, indexação, erros de rastreamento e Core Web Vitals. Testes locais não substituem medições reais de campo.
 5. Validar dados estruturados no Rich Results Test. A marcação de empresa não garante exibição especial; dados ausentes precisam ser reais antes de incluídos.
 
@@ -101,6 +101,6 @@ Referência: [Google — bloquear indexação com noindex](https://developers.go
 
 ### Indexação após publicar
 
-1. Search Console → Sitemaps: enviar `https://www.tonyananias.com.br/sitemap.xml`.
+1. Search Console → Sitemaps: enviar `https://tonyananias.com.br/sitemap.xml`.
 2. Inspeção de URL → Solicitar indexação, começando por home, `/trafego-pago/`, `/google-ads/`, `/seo-local/`, as 4 páginas de segmento e `/regiao-presidente-prudente/`.
-3. Usar a propriedade de domínio ou a de prefixo com `www`; a propriedade sem `www` não recebe dados porque o host público redireciona para `www`.
+3. Usar a propriedade de domínio ou a de prefixo `https://tonyananias.com.br/`, que é o host canônico.

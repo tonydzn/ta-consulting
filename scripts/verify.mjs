@@ -50,7 +50,7 @@ try {
     const response=await page.goto(base+route,{waitUntil:'networkidle'});
     assert.equal(response.status(),200,route);
     assert.equal(await page.locator('h1').count(),1,route);
-    assert.equal(await page.locator('link[rel=canonical]').getAttribute('href'),'https://www.tonyananias.com.br'+route);
+    assert.equal(await page.locator('link[rel=canonical]').getAttribute('href'),'https://tonyananias.com.br'+route);
     const width=await page.evaluate(()=>document.documentElement.scrollWidth);
     assert(width<=390,`${route} transborda: ${width}`);
     await page.locator('script[type="application/ld+json"]').evaluateAll(scripts=>scripts.forEach(s=>JSON.parse(s.textContent)));

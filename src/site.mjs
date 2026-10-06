@@ -1,5 +1,5 @@
 export const site = {
-  name: 'TA Consulting', origin: 'https://www.tonyananias.com.br',
+  name: 'TA Consulting', origin: 'https://tonyananias.com.br',
   googleTagManagerId: 'GTM-TZZLJG72',
   email: 'tony.ananias@gmail.com', linkedin: 'https://www.linkedin.com/in/tonyananias',
   // Informe somente um número real, em formato internacional, para habilitar o contato.
