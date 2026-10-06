@@ -1,0 +1,72 @@
+import { chromium } from 'playwright';
+import AxeBuilder from '@axe-core/playwright';
+import assert from 'node:assert/strict';
+import { once } from 'node:events';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { serve } from './serve.mjs';
+
+process.env.PORT='0';
+const server=serve();
+await once(server,'listening');
+const base=`http://127.0.0.1:${server.address().port}`;
+let browser;
+const results={viewports:[],accessibility:[],errors:[],flow:[]};
+try {
+  browser=await chromium.launch({channel:'chrome',headless:true});
+  const context=await browser.newContext({reducedMotion:'reduce'});
+  const page=await context.newPage();
+  page.on('pageerror',error=>results.errors.push(error.message));
+  await mkdir('.impeccable/review',{recursive:true});
+  for(const width of [1440,768,390,320]){
+    await page.setViewportSize({width,height:900});
+    await page.goto(base+'/obrigado/');
+    await page.evaluate(()=>document.fonts.ready);
+    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+    assert.equal(await page.locator('h1').count(),1);
+    assert.equal(await page.locator('meta[name=robots]').getAttribute('content'),'noindex,follow');
+    const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
+    results.accessibility.push({width,violations:axe.violations});
+    assert.equal(axe.violations.length,0,JSON.stringify(axe.violations));
+    if(width===1440||width===390)await page.screenshot({path:`.impeccable/review/obrigado-${width}.png`,fullPage:true});
+    results.viewports.push({width,overflow:false});
+  }
+  await page.setViewportSize({width:390,height:900});
+  await page.goto(base+'/contato/');
+  await page.getByRole('button',{name:'Preparar solicitação'}).click();
+  assert(!await page.locator('#form-result').isVisible());
+  const fields={name:'QA — não enviar',company:'Empresa & Cia',email:'qa@example.com',challenge:'Mensurar contatos <teste>'};
+  for(const [id,value] of Object.entries(fields))await page.locator('#'+id).fill(value);
+  await page.getByRole('button',{name:'Preparar solicitação'}).click();
+  assert(await page.locator('#form-result').isVisible());
+  const mail=new URL(await page.locator('#email-draft').getAttribute('href'));
+  assert.equal(mail.pathname,'tony.ananias@gmail.com');
+  for(const value of Object.values(fields))assert(mail.searchParams.get('body').includes(value));
+  assert.equal(await page.locator('#form-result').evaluate(el=>el===document.activeElement),true);
+  await page.evaluate(()=>Object.defineProperty(navigator,'clipboard',{value:{writeText:async()=>{throw new Error('denied');}},configurable:true}));
+  await page.getByRole('button',{name:'Copiar mensagem'}).click();
+  assert((await page.locator('#copy-status').textContent()).includes('não permitiu'));
+  await page.locator('#challenge').fill('Novo desafio');
+  assert(!await page.locator('#form-result').isVisible());
+  await page.getByRole('button',{name:'Preparar solicitação'}).click();
+  await page.evaluate(()=>{document.activeElement?.blur();window.scrollTo({top:0,behavior:'instant'});});
+  await page.screenshot({path:'.impeccable/review/contact-completion-390.png',fullPage:true});
+  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
+  assert.equal(axe.violations.length,0,JSON.stringify(axe.violations));
+  await page.getByRole('link',{name:'Já enviei meu e-mail'}).click();
+  assert.equal(new URL(page.url()).pathname,'/obrigado/');
+  assert.equal(new URL(page.url()).search,'');
+  await page.getByRole('link',{name:'Voltar ao início',exact:true}).first().click();
+  assert.equal(new URL(page.url()).pathname,'/');
+  results.flow.push('Validação, revisão, encoding, foco, fallback de cópia, edição, agradecimento e retorno; nenhum e-mail enviado.');
+  const nojs=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:900}});
+  const staticPage=await nojs.newPage();
+  await staticPage.goto(base+'/obrigado/');
+  assert(await staticPage.getByRole('link',{name:'Conversar pelo WhatsApp',exact:true}).isVisible());
+  await nojs.close();
+  assert.equal(results.errors.length,0);
+  await writeFile('.impeccable/review/contact-seo.json',JSON.stringify(results,null,2));
+  console.log(JSON.stringify(results,null,2));
+} finally {
+  await browser?.close();
+  await new Promise(resolve=>server.close(resolve));
+}

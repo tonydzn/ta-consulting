@@ -1,0 +1,7 @@
+Use case: illustration-story
+Asset type: production website illustration for the TA Consulting about page, transparent PNG.
+Primary request: a quiet, premium editorial 3D still life representing senior marketing operating experience without a portrait: navy campaign ledger, blank cyan tablet, abstract route marker, ivory pencil, and subtle connecting objects for acquisition, measurement and automation.
+Composition: compact vertical scene readable around 260px wide.
+Style: polished tactile matte 3D, consistent with the TA Consulting illustration set.
+Palette: deep navy #102458, electric blue #2661ff, cyan #67edff and soft ivory.
+Constraints: true transparent alpha background; no people, text, letters, numbers, logos, charts, UI, watermarks or background scene.

@@ -1,0 +1,7 @@
+Use case: illustration-story
+Asset type: production website illustration for the TA Consulting services page, transparent PNG.
+Primary request: three fictional, diverse adult marketing professionals organize physical blue signal, analytics and CRM modules as one connected system. The people have natural hands, realistic adult proportions and friendly, thoughtful expressions.
+Composition: compact horizontal scene with every figure and object inside frame. Readable around 340px wide.
+Style: polished matte editorial 3D, matching `people-data.png` and `customer-conversation.png`.
+Palette: electric blue #2661ff, cyan #67edff, navy #102458, ivory and warm natural skin tones.
+Constraints: true transparent alpha background; no text, logos, numbers, charts, dashboards, watermarks or resemblance to a real person.
