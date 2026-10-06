@@ -1,4 +1,4 @@
-import { serviceSeo } from './seo.mjs';
+import { serviceSeo, audienceSeo } from './seo.mjs';
 import { platformStrip, localSection, localQuestions } from './local.mjs';
 import { kineticHero, funnelLab } from './visuals.mjs';
 import { site, services, categories, segments } from './site.mjs';
@@ -49,18 +49,19 @@ export function serviceAudiencePage(service, segment) {
   const seo = serviceSeo[service.slug];
   const audienceName = segment.name.toLowerCase();
   const path = `/${service.slug}/${segment.slug}/`;
-  const title = `${service.name} para ${segment.name} em Presidente Prudente`;
-  const description = `${service.name} para ${audienceName} em Presidente Prudente e região. Estratégia, presença digital, mensuração e contato alinhados à operação.`;
+  const { label, focus } = audienceSeo[service.slug] ?? {label:service.name, focus:'estratégia, mensuração e contatos alinhados à operação'};
+  const title = `${label} para ${audienceName} em Presidente Prudente`;
+  const description = `${label} para ${audienceName} em Presidente Prudente e região: ${focus}.`;
   const whatsappMessage = `Olá, Tony! Quero conversar sobre ${service.name} para ${audienceName}.`;
   const whatsappLink = `${whatsappUrl().split('?')[0]}?text=${encodeURIComponent(whatsappMessage)}`;
   const relatedAudiences = segments.filter(item=>item.slug!==segment.slug);
   const relatedServices = serviceSeo[service.slug].related.map(slug=>services.find(item=>item.slug===slug)).filter(Boolean);
   return layout({path,title,description,className:'service-audience-page',extra:[{
     '@type':'Service', '@id':`${site.origin}${path}#service`, name:title, description,
-    serviceType:service.name, provider:{'@id':site.origin+'/#organization'}, url:`${site.origin}${path}`,
+    serviceType:label, provider:{'@id':site.origin+'/#organization'}, url:`${site.origin}${path}`,
     areaServed:site.areaServed, audience:{'@type':'Audience',audienceType:segment.name},
   }],body:`
-    ${pageIntro(`${service.name} para<br>${segment.name.toLowerCase()}.`,`${service.intro} Uma estratégia desenhada para a realidade de ${audienceName} em Presidente Prudente e região.`,`<a href="/servicos/">Serviços</a><span aria-hidden="true">/</span><a href="/${service.slug}/">${service.name}</a><span aria-hidden="true">/</span><span>${segment.name}</span>`)}
+    ${pageIntro(`${label} para ${audienceName}<br>em Presidente Prudente.`,`${service.intro} Uma estratégia desenhada para a realidade de ${audienceName} em Presidente Prudente e região.`,`<a href="/servicos/">Serviços</a><span aria-hidden="true">/</span><a href="/${service.slug}/">${service.name}</a><span aria-hidden="true">/</span><span>${segment.name}</span>`)}
     <figure class="segment-visual container service-audience-visual"><img src="${segment.image}" width="1536" height="1024" alt="${escape(segment.imageAlt)}" decoding="async"><figcaption>${service.name}, descoberta e atendimento conectados à operação.</figcaption></figure>
     <section class="container service-audience-action"><div><p>${segment.promise}</p><a class="button" href="${escape(whatsappLink)}" target="_blank" rel="noopener noreferrer">Falar sobre minha operação ${arrow}</a></div><p>Atendimento a Presidente Prudente e municípios em até 200 km. A proposta considera objetivo, capacidade de atendimento e canais já utilizados.</p></section>
     <section class="section service-audience-problem"><div class="container"><div class="section-heading"><h2>${service.question}</h2><p>${service.answer}</p></div><div class="service-audience-context"><h3>Para ${audienceName}</h3><p>${segment.problem}</p></div></div></section>
@@ -88,10 +89,10 @@ export function segmentPage(segment) {
     serviceType:'Marketing digital',
   };
   return layout({path:`/${segment.slug}/`,className:'segment-page',title:segment.title,description:segment.description,extra:[schemaService],body:`
-    ${pageIntro(segment.heading,segment.intro,`<a href="/servicos/">Serviços</a><span aria-hidden="true">/</span><span>${segment.name}</span>`)}
+    ${pageIntro(`Marketing para ${segment.name.toLowerCase()}<br>em Presidente Prudente.`,segment.intro,`<a href="/servicos/">Serviços</a><span aria-hidden="true">/</span><span>${segment.name}</span>`)}
     <figure class="segment-visual container"><img src="${segment.image}" width="1536" height="1024" alt="${escape(segment.imageAlt)}" decoding="async"><figcaption>Estratégia, descoberta e contato precisam operar na mesma direção.</figcaption></figure>
     <section class="container segment-intro-action" aria-label="Comece uma conversa sobre sua operação"><div><p>${segment.promise}</p><a class="button" href="${escape(whatsappLink)}" target="_blank" rel="noopener noreferrer">Conversar pelo WhatsApp ${arrow}</a></div><p class="segment-region">Presidente Prudente e municípios em até 200 km.<br>Estratégia construída conforme a realidade da sua operação.</p></section>
-    <section class="section segment-context"><div class="container"><div class="section-heading"><h2>O contato não pode<br>parar no anúncio.</h2><p>${segment.problem}</p></div><div class="segment-priorities"><h3>Frentes que podem entrar no plano</h3><ul>${segment.priorities.map(item=>`<li>${item}</li>`).join('')}</ul></div></div></section>
+    <section class="section segment-context"><div class="container"><div class="section-heading"><h2>${segment.heading}</h2><p>${segment.problem}</p></div><div class="segment-priorities"><h3>Frentes que podem entrar no plano</h3><ul>${segment.priorities.map(item=>`<li>${item}</li>`).join('')}</ul></div></div></section>
     <section class="section container segment-journey"><div class="section-heading"><h2>Uma jornada feita<br>para a sua rotina.</h2><p>O ponto de partida é entender como a pessoa procura, o que precisa saber para avançar e quem assume o contato dentro da operação.</p></div><ol>${segment.steps.map(([title,text],index)=>`<li><span aria-hidden="true">${String(index+1).padStart(2,'0')}</span><div><h3>${title}</h3><p>${text}</p></div></li>`).join('')}</ol></section>
     <section class="related-services container segment-service-directory"><h2>Escolha a frente que sua operação precisa agora.</h2><div>${services.map(service=>button(`${service.name} para ${segment.name.toLowerCase()}`,`/${service.slug}/${segment.slug}/`,true)).join('')}</div></section>
     <section class="segment-note"><div class="container"><h2>Comunicação com responsabilidade.</h2><p>${segment.note}</p></div></section>

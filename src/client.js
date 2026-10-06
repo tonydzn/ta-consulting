@@ -89,7 +89,7 @@
       const text = Object.entries(labels).map(([key,label])=>`${label}: ${String(data.get(key) || 'Não informado').trim()}`).join('\n\n');
       const result = document.querySelector('#form-result');
       document.querySelector('#message-preview').value = text;
-      document.querySelector('#email-draft').href = `mailto:tony.ananias@gmail.com?subject=${encodeURIComponent('Análise de operação — '+(data.get('company') || data.get('name'))}&body=${encodeURIComponent(text)}`;
+      document.querySelector('#email-draft').href = `mailto:tony.ananias@gmail.com?subject=${encodeURIComponent('Análise de operação — '+(data.get('company') || data.get('name')))}&body=${encodeURIComponent(text)}`;
       document.querySelector('#copy-status').textContent = '';
       result.hidden = false;
       result.focus({preventScroll:true});
