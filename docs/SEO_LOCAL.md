@@ -90,3 +90,17 @@ Não há redirecionamento automático ao abrir o aplicativo ou copiar a mensagem
 Não usar visitas a `/obrigado/` como prova de lead recebido: o envio por `mailto:` não fornece confirmação de entrega ao site. Uma integração futura deve redirecionar apenas após uma resposta de sucesso do serviço de envio. O contêiner Google Tag Manager `GTM-TZZLJG72`, informado pelo usuário, foi instalado posteriormente no layout compartilhado. A instalação não adiciona eventos de conversão nem envia os campos do formulário ao dataLayer. Tags e gatilhos publicados no próprio GTM são administrados separadamente.
 
 Referência: [Google — bloquear indexação com noindex](https://developers.google.com/search/docs/crawling-indexing/block-indexing).
+
+## Páginas por segmento — 06/10/2026
+
+- As 32 páginas serviço × segmento usam conteúdo próprio em `src/content/audience-services.mjs`: situação, plano de trabalho, cenário ilustrativo e duas perguntas frequentes por combinação. Cenários são identificados como ilustrativos; nenhum cliente, número ou resultado foi inventado.
+- Títulos, H1, descrições e dados estruturados usam rótulos em português (`audienceSeo` em `src/seo.mjs`). Os nomes dos serviços na navegação também passaram para português.
+- As 4 páginas de segmento têm H1 com a palavra-chave e um diretório descritivo com links para as 8 combinações.
+- Ilustrações em PNG ganham versões WebP responsivas (`nome-LARGURA.webp`), servidas por `<picture>` no build. Para uma nova ilustração, gere as variantes 640, 1024 e largura original.
+- WhatsApp oficial: (18) 98103-4411.
+
+### Indexação após publicar
+
+1. Search Console → Sitemaps: enviar `https://www.tonyananias.com.br/sitemap.xml`.
+2. Inspeção de URL → Solicitar indexação, começando por home, `/trafego-pago/`, `/google-ads/`, `/seo-local/`, as 4 páginas de segmento e `/regiao-presidente-prudente/`.
+3. Usar a propriedade de domínio ou a de prefixo com `www`; a propriedade sem `www` não recebe dados porque o host público redireciona para `www`.

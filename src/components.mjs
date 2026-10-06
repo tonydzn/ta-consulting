@@ -1,4 +1,5 @@
 import { tagManagerHead, tagManagerBody } from './tracking.mjs';
+import { readdirSync } from 'node:fs';
 import { site, services, groups, layers, method, experience, metrics } from './site.mjs';
 
 export const escape = (value = '') => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -58,11 +59,36 @@ export function schema(path, title, description, extra = []) {
   return JSON.stringify({'@context':'https://schema.org','@graph':[...graph,...extra]}).replace(/</g,'\\u003c');
 }
 
+
+// Versões WebP geradas em public/assets/illustrations (nome-LARGURA.webp).
+// Cada <img> de ilustração em PNG ganha um <picture> com srcset responsivo;
+// o PNG original continua como fallback.
+const illustrationDir = new URL('../public/assets/illustrations/', import.meta.url);
+const webpVariants = (() => {
+  const map = {};
+  try {
+    for (const file of readdirSync(illustrationDir)) {
+      const m = file.match(/^(.+)-(\d+)\.webp$/);
+      if (m) (map[m[1]] ??= []).push(Number(m[2]));
+    }
+  } catch {}
+  for (const k in map) map[k].sort((a,b)=>a-b);
+  return map;
+})();
+export function withWebp(html) {
+  return html.replace(/<img ([^>]*?)src="\/assets\/illustrations\/([a-z-]+)\.png"([^>]*)>/g, (tag, before, name, after) => {
+    const widths = webpVariants[name];
+    if (!widths || /srcset=/.test(tag)) return tag;
+    const srcset = widths.map(w=>`/assets/illustrations/${name}-${w}.webp ${w}w`).join(', ');
+    return `<picture><source type="image/webp" srcset="${srcset}" sizes="(max-width:800px) 100vw, 1050px">${tag}</picture>`;
+  });
+}
+
 export function layout({path='/', title, description, body, extra=[], noindex=false, className=''}) {
   const fullTitle = title.includes('TA Consulting') ? title : `${title} | TA Consulting`;
   const article = extra.find(item=>item['@type']==='Article');
   const articleMeta = article ? `<meta property="article:published_time" content="${escape(article.datePublished)}">${article.dateModified ? `<meta property="article:modified_time" content="${escape(article.dateModified)}">` : ''}<meta property="article:author" content="${site.origin}/sobre/">` : '';
-  return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">${tagManagerHead}<meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(fullTitle)}</title><meta name="description" content="${escape(description)}"><meta name="author" content="Tony Ananias"><meta name="theme-color" content="#080d17">${process.env.GOOGLE_SITE_VERIFICATION?`<meta name="google-site-verification" content="${escape(process.env.GOOGLE_SITE_VERIFICATION)}">`:''}<meta name="color-scheme" content="dark"><meta name="robots" content="${noindex?'noindex,follow':'index,follow,max-image-preview:large'}">${path==='/404/'?'':`<link rel="canonical" href="${site.origin}${path}">`}<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="preload" href="/assets/fonts/barlow-semi-condensed-500.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-400.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/assets/site.css"><meta property="og:type" content="${extra.some(x=>x['@type']==='Article')?'article':'website'}"><meta property="og:site_name" content="TA Consulting"><meta property="og:locale" content="pt_BR"><meta property="og:title" content="${escape(fullTitle)}"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${site.origin}${path}"><meta property="og:image" content="${site.origin}/assets/social-cover.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="TA Consulting — mídia, dados e automação na mesma direção."><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escape(fullTitle)}"><meta name="twitter:description" content="${escape(description)}"><meta name="twitter:image" content="${site.origin}/assets/social-cover.png"><meta name="twitter:image:alt" content="TA Consulting — mídia, dados e automação na mesma direção.">${articleMeta}<script type="application/ld+json">${schema(path,fullTitle,description,extra)}</script><script src="/assets/site.js" defer></script></head><body class="${className}${site.whatsapp?' has-whatsapp':''}">${tagManagerBody}<noscript><style>@media(max-width:700px){.menu-toggle{display:none}.header-inner{flex-wrap:wrap;height:auto;padding-block:16px}.navigation{display:flex;position:static;height:auto;order:3;flex-direction:row;flex-wrap:wrap;padding:0;gap:14px;width:100%}.navigation a{font:400 13px var(--body);padding:8px 0}.header-contact{margin-left:auto}}</style></noscript>${header(path)}<main id="conteudo">${body}</main>${footer()}${whatsappFloat()}</body></html>`;
+  return withWebp(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">${tagManagerHead}<meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(fullTitle)}</title><meta name="description" content="${escape(description)}"><meta name="author" content="Tony Ananias"><meta name="theme-color" content="#080d17">${process.env.GOOGLE_SITE_VERIFICATION?`<meta name="google-site-verification" content="${escape(process.env.GOOGLE_SITE_VERIFICATION)}">`:''}<meta name="color-scheme" content="dark"><meta name="robots" content="${noindex?'noindex,follow':'index,follow,max-image-preview:large'}">${path==='/404/'?'':`<link rel="canonical" href="${site.origin}${path}">`}<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="preload" href="/assets/fonts/barlow-semi-condensed-500.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-400.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/assets/site.css"><meta property="og:type" content="${extra.some(x=>x['@type']==='Article')?'article':'website'}"><meta property="og:site_name" content="TA Consulting"><meta property="og:locale" content="pt_BR"><meta property="og:title" content="${escape(fullTitle)}"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${site.origin}${path}"><meta property="og:image" content="${site.origin}/assets/social-cover.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="TA Consulting — mídia, dados e automação na mesma direção."><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escape(fullTitle)}"><meta name="twitter:description" content="${escape(description)}"><meta name="twitter:image" content="${site.origin}/assets/social-cover.png"><meta name="twitter:image:alt" content="TA Consulting — mídia, dados e automação na mesma direção.">${articleMeta}<script type="application/ld+json">${schema(path,fullTitle,description,extra)}</script><script src="/assets/site.js" defer></script></head><body class="${className}${site.whatsapp?' has-whatsapp':''}">${tagManagerBody}<noscript><style>@media(max-width:700px){.menu-toggle{display:none}.header-inner{flex-wrap:wrap;height:auto;padding-block:16px}.navigation{display:flex;position:static;height:auto;order:3;flex-direction:row;flex-wrap:wrap;padding:0;gap:14px;width:100%}.navigation a{font:400 13px var(--body);padding:8px 0}.header-contact{margin-left:auto}}</style></noscript>${header(path)}<main id="conteudo">${body}</main>${footer()}${whatsappFloat()}</body></html>`);
 }
 
 export function pageIntro(title, text, trail='') {
