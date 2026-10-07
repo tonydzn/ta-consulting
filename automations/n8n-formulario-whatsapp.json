@@ -1,0 +1,143 @@
+{
+  "name": "TA Consulting — Formulário do site → WhatsApp",
+  "nodes": [
+    {
+      "id": "a1",
+      "name": "Webhook formulário",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "ta-contato-site",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ta-contato",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "a2",
+      "name": "Montar mensagem",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Código do nó \"Montar mensagem\" (n8n Code node, modo \"Run Once for All Items\")\nconst DESTINO = '5518981034411'; // WhatsApp comercial que recebe o aviso\n\nconst b = $input.first().json.body || {};\nconst v = (x) => String(x ?? '').trim();\nconst linha = (rotulo, valor) => `*${rotulo}:* ${v(valor) || '—'}`;\n\nconst digitos = v(b.phone).replace(/\\D/g, '');\nlet waLead = '';\nif (digitos.length >= 10) {\n  const numero = digitos.length <= 11 ? '55' + digitos.replace(/^0+/, '') : digitos;\n  waLead = `https://wa.me/${numero}`;\n}\n\nconst utm = b.utm || {};\nconst origem = [utm.utm_source, utm.utm_medium, utm.utm_campaign].filter(Boolean).join(' / ');\nconst extrasOrigem = [utm.utm_content && `anúncio: ${utm.utm_content}`, utm.fbclid && 'fbclid', utm.gclid && 'gclid'].filter(Boolean).join(' · ');\n\nconst quando = new Date(b.submittedAt || Date.now()).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', dateStyle: 'short', timeStyle: 'short' });\n\nconst partes = [\n  '🟢 *Novo lead — site TA Consulting*',\n  '',\n  linha('Nome', b.name),\n  linha('Empresa', b.company),\n  linha('E-mail', b.email),\n  linha('WhatsApp', b.phone),\n  '',\n  '*Como podemos ajudar?*',\n  v(b.challenge) || '—',\n  '',\n  linha('Origem', origem || 'direto / orgânico'),\n];\nif (extrasOrigem) partes.push(`_${extrasOrigem}_`);\npartes.push(linha('Página', b.page), linha('Recebido em', quando));\nif (waLead) partes.push('', `👉 Responder: ${waLead}`);\n\nreturn [{ json: { number: DESTINO, text: partes.join('\\n') } }];\n"
+      }
+    },
+    {
+      "id": "a3",
+      "name": "Evolution — enviar texto",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        0
+      ],
+      "onError": "continueErrorOutput",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 2000,
+      "parameters": {
+        "method": "POST",
+        "url": "https://SEU-EVOLUTION/message/sendText/SUA-INSTANCIA",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ number: $json.number, text: $json.text }) }}",
+        "options": {
+          "timeout": 15000
+        }
+      }
+    },
+    {
+      "id": "a4",
+      "name": "Responder OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        -100
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true } }}",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    },
+    {
+      "id": "a5",
+      "name": "Responder erro",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        100
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: false } }}",
+        "options": {
+          "responseCode": 502
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook formulário": {
+      "main": [
+        [
+          {
+            "node": "Montar mensagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar mensagem": {
+      "main": [
+        [
+          {
+            "node": "Evolution — enviar texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evolution — enviar texto": {
+      "main": [
+        [
+          {
+            "node": "Responder OK",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder erro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo"
+  },
+  "active": false
+}

@@ -27,7 +27,7 @@ Atuação no Brasil e nos Estados Unidos, conforme site fornecido. Comunicação
 - Serviços confirmados no briefing: Google Ads, Meta Ads, TikTok Ads, Amazon Ads, analytics e tracking, automação com n8n/CRM/APIs, IA aplicada ao marketing, e-commerce e geração de leads.
 - Preservar também competências do original: Microsoft Ads, YouTube, Search Ads 360, CRO, Make, Zapier, Python e Google Apps Script.
 - Publicação estática, compatível com a arquitetura original. Expandir para páginas de serviços, sobre, contato e Insights.
-- Sem backend de leads nem telefone de WhatsApp no pacote. Não simular envio. Manter contato por e-mail com alternativa para copiar a solicitação; integração futura depende de configuração real.
+- Formulário de contato envia para `/api/contato` (Vercel Function), que repassa ao webhook do n8n; o n8n entrega a mensagem no WhatsApp comercial via Evolution API. Se o envio falhar, o formulário volta ao fallback por e-mail/cópia. Configuração em `docs/CONTACT_WHATSAPP.md`.
 - Artigos futuros não podem ser apresentados como publicados. Não inventar datas, autores, depoimentos, credenciais, clientes ou resultados.
 - Certificações constam do original, mas não há certificados ou datas de validade. Preservar como histórico informado, sem alegar status atual de Google Partner.
 

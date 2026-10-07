@@ -90,12 +90,12 @@ try {
   for(const id of ['home','expertise','automation','experience','about','contact'])assert.equal(await page.locator('#'+id).count(),1,`Âncora legada ausente: ${id}`);
 
   await page.goto(base+'/contato/');
-  await page.getByRole('button',{name:'Preparar solicitação'}).click();
+  await page.getByRole('button',{name:'Enviar solicitação'}).click();
   assert.equal(await page.locator('#form-result').isVisible(),false);
   const fields={name:'Teste QA — não enviar',company:'Empresa & Cia',email:'qa@example.com',phone:'+55 11 99999-9999',challenge:'Teste de formulário <sem envio> & caracteres especiais.'};
   for(const [id,value] of Object.entries(fields))await page.locator('#'+id).fill(value);
-  await page.getByRole('button',{name:'Preparar solicitação'}).click();
-  assert(await page.locator('#form-result').isVisible());
+  await page.getByRole('button',{name:'Enviar solicitação'}).click();
+  await page.locator('#form-result').waitFor();assert(await page.locator('#form-result').isVisible());
   const href=await page.locator('#email-draft').getAttribute('href');
   const mail=new URL(href);
   assert.equal(mail.pathname,'tony.ananias@gmail.com');
