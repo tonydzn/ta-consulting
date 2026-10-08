@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-08T00:00:00-03:00",
+  "title": "Design System: TA Consulting",
+  "extensions": {
+    "colorMeta": {
+      "night": { "role": "neutral", "displayName": "Night", "canonical": "#080d17", "tonalRamp": ["oklch(15% 0.03 265)", "oklch(25% 0.04 265)", "oklch(35% 0.05 265)", "oklch(45% 0.06 265)", "oklch(55% 0.06 265)", "oklch(70% 0.05 265)", "oklch(85% 0.03 265)", "oklch(95% 0.01 265)"] },
+      "night-surface": { "role": "neutral", "displayName": "Night Surface", "canonical": "#101c2f" },
+      "night-band": { "role": "secondary", "displayName": "Night Band", "canonical": "#102458" },
+      "system-blue": { "role": "secondary", "displayName": "System Blue", "canonical": "#143bd0" },
+      "cta-blue": { "role": "secondary", "displayName": "CTA Blue", "canonical": "#1946e7" },
+      "electric": { "role": "primary", "displayName": "Electric Blue", "canonical": "#1248ed", "tonalRamp": ["oklch(15% 0.08 265)", "oklch(25% 0.14 265)", "oklch(35% 0.2 265)", "oklch(50% 0.25 265)", "oklch(60% 0.22 265)", "oklch(72% 0.15 265)", "oklch(85% 0.08 265)", "oklch(95% 0.03 265)"] },
+      "action-blue": { "role": "primary", "displayName": "Action Blue", "canonical": "#2860f0" },
+      "cyan": { "role": "primary", "displayName": "Signal Cyan", "canonical": "#67edff", "tonalRamp": ["oklch(15% 0.04 210)", "oklch(30% 0.08 210)", "oklch(45% 0.11 210)", "oklch(60% 0.13 210)", "oklch(75% 0.13 210)", "oklch(89% 0.12 210)", "oklch(94% 0.07 210)", "oklch(97% 0.03 210)"] },
+      "cyan-hover": { "role": "primary", "displayName": "Cyan Hover", "canonical": "#b3f7ff" },
+      "mint": { "role": "tertiary", "displayName": "Mint", "canonical": "#72f1ce" },
+      "lab-ice": { "role": "secondary", "displayName": "Lab Ice", "canonical": "#d7f9ff" },
+      "lab-ink": { "role": "secondary", "displayName": "Lab Ink", "canonical": "#092636" },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#f4f8ff" },
+      "haze": { "role": "neutral", "displayName": "Haze", "canonical": "#b1bfd3" },
+      "rule": { "role": "neutral", "displayName": "Rule", "canonical": "#293952" },
+      "field-bg": { "role": "neutral", "displayName": "Field", "canonical": "#0e1b2d" },
+      "field-border": { "role": "neutral", "displayName": "Field Border", "canonical": "#5e7799" },
+      "whatsapp": { "role": "tertiary", "displayName": "WhatsApp Green", "canonical": "#25d366" },
+      "ci-ground": { "role": "neutral", "displayName": "Ground (Cardápio IA)", "canonical": "#ffffff" },
+      "ci-surface": { "role": "neutral", "displayName": "Warm Surface (Cardápio IA)", "canonical": "#f6f5f0" },
+      "ci-ink": { "role": "neutral", "displayName": "Ink (Cardápio IA)", "canonical": "#14181c", "tonalRamp": ["oklch(15% 0.01 250)", "oklch(25% 0.01 250)", "oklch(35% 0.01 250)", "oklch(45% 0.01 250)", "oklch(55% 0.01 250)", "oklch(70% 0.01 250)", "oklch(85% 0.005 250)", "oklch(95% 0.003 250)"] },
+      "ci-muted": { "role": "neutral", "displayName": "Muted (Cardápio IA)", "canonical": "#5b626a" },
+      "ci-rule": { "role": "neutral", "displayName": "Rule (Cardápio IA)", "canonical": "#e4e2dc" },
+      "ci-green": { "role": "primary", "displayName": "WhatsApp Green (Cardápio IA)", "canonical": "#1fb85a", "tonalRamp": ["oklch(15% 0.05 150)", "oklch(28% 0.09 150)", "oklch(40% 0.13 150)", "oklch(52% 0.16 150)", "oklch(68% 0.19 150)", "oklch(80% 0.15 150)", "oklch(90% 0.09 150)", "oklch(96% 0.04 150)"] },
+      "ci-green-hover": { "role": "primary", "displayName": "Green Hover", "canonical": "#1aa550" },
+      "ci-green-text": { "role": "primary", "displayName": "Green Text", "canonical": "#0f7a3a" },
+      "ci-green-ink": { "role": "primary", "displayName": "Green Ink", "canonical": "#06301a" },
+      "ci-green-soft": { "role": "primary", "displayName": "Green Soft", "canonical": "#e6f8ec" },
+      "ci-green-edge": { "role": "primary", "displayName": "Green Edge", "canonical": "#bfe9cd" },
+      "ci-orange": { "role": "secondary", "displayName": "Tomato Orange (Cardápio IA)", "canonical": "#ff5a1f", "tonalRamp": ["oklch(15% 0.05 35)", "oklch(28% 0.1 35)", "oklch(42% 0.16 35)", "oklch(55% 0.2 35)", "oklch(67% 0.22 35)", "oklch(78% 0.15 35)", "oklch(88% 0.08 35)", "oklch(96% 0.03 35)"] },
+      "ci-orange-text": { "role": "secondary", "displayName": "Orange Text", "canonical": "#bf3a0a" },
+      "ci-orange-soft": { "role": "secondary", "displayName": "Orange Soft", "canonical": "#ffece4" },
+      "ci-bar-idle": { "role": "neutral", "displayName": "Idle Bar", "canonical": "#cfd3d8" },
+      "ci-chat-wall": { "role": "neutral", "displayName": "Chat Wall", "canonical": "#efe7dd" },
+      "ci-chat-out": { "role": "tertiary", "displayName": "Chat Out", "canonical": "#dcf8c6" },
+      "ci-chat-header": { "role": "tertiary", "displayName": "Chat Header", "canonical": "#075e54" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Page h1; uppercase at clamp(72px,6.6vw,96px) on the home hero." },
+      "headline": { "displayName": "Headline", "purpose": "Section h2; per-section sizes 44–54px desktop, 39–44px mobile." },
+      "title": { "displayName": "Title", "purpose": "h3 for rows, steps, FAQ groups; cyan service names climb to clamp(33px,3.3vw,47px)." },
+      "subtitle": { "displayName": "Subtitle", "purpose": "h4 and promise lines inside rows." },
+      "body": { "displayName": "Body", "purpose": "Base text; max 70ch." },
+      "body-muted": { "displayName": "Body Muted", "purpose": "Descriptive paragraphs in Haze." },
+      "label": { "displayName": "Label", "purpose": "Captions, source notes, hints; 13px for nav and metric terms." },
+      "action": { "displayName": "Action", "purpose": "Buttons, text links, navigation." },
+      "ci-display": { "displayName": "Display (Cardápio IA)", "purpose": "Hero h1 in three lines, last line green." },
+      "ci-headline": { "displayName": "Headline (Cardápio IA)", "purpose": "Section h2 with second line in Green Text." },
+      "ci-title": { "displayName": "Title (Cardápio IA)", "purpose": "Compare-panel h3; steps and kinds at 26–28px." },
+      "ci-lead": { "displayName": "Lead (Cardápio IA)", "purpose": "Hero lead and section intros, 46–52ch." },
+      "ci-action": { "displayName": "Action (Cardápio IA)", "purpose": "Green buttons; 17px in the big variant." }
+    },
+    "shadows": [
+      { "name": "pill-lift", "value": "0 7px 24px #0005", "purpose": "Floating WhatsApp pill on dark routes." },
+      { "name": "pill-lift-light", "value": "0 10px 28px #0e3a1f33", "purpose": "Floating WhatsApp pill on Cardápio IA." },
+      { "name": "figure-ground", "value": "drop-shadow(0 20px 24px rgb(0 12 38 / .28))", "purpose": "Illustrated characters standing on the navy sheet." },
+      { "name": "phone-float", "value": "0 18px 40px -20px #14181c55", "purpose": "Cardápio IA hero phone overlapping the illustration." },
+      { "name": "chart-glow", "value": "drop-shadow(0 3px 8px #001c42)", "purpose": "Cyan growth line on the home chart." }
+    ],
+    "motion": [
+      { "name": "ease", "value": "cubic-bezier(.16, 1, .3, 1)", "purpose": "Default easing for lifts, arrows, bubble entrances and panel swaps." },
+      { "name": "button-lift", "value": "transform .25s var(--ease); translateY(-3px) dark / translateY(-2px) light", "purpose": "Primary button hover." },
+      { "name": "bubble-in", "value": "opacity .35s, transform .4s var(--ease); from translateY(8px)", "purpose": "Chat messages appearing in the Cardápio IA phone." },
+      { "name": "panel-enter", "value": "ci-enter .5s var(--ease); from opacity 0 translateY(12px)", "purpose": "Compare panel swap." },
+      { "name": "metric-arrive", "value": "metric-arrive .7s var(--ease)", "purpose": "Metric values entering the viewport." },
+      { "name": "reduced-motion", "value": "all animations and transitions removed under prefers-reduced-motion", "purpose": "Required on every route." }
+    ],
+    "breakpoints": [
+      { "name": "wide", "value": "1700px" },
+      { "name": "lg", "value": "1200px" },
+      { "name": "md", "value": "960px" },
+      { "name": "sm", "value": "700px" },
+      { "name": "xs", "value": "370px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Square cyan button with a trailing arrow; the only call to action on dark routes.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Solicitar análise<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:space-between;gap:32px;min-height:58px;padding:14px 22px;background:#67edff;color:#080d17;font:600 14px/1.5 Manrope,Arial,sans-serif;text-decoration:none;border:1px solid transparent;border-radius:0;transition:background .2s,transform .25s cubic-bezier(.16,1,.3,1)}.ds-btn-primary svg{width:22px;height:22px;flex-shrink:0;transition:transform .25s cubic-bezier(.16,1,.3,1)}.ds-btn-primary:hover{background:#b3f7ff;transform:translateY(-3px)}.ds-btn-primary:hover svg{transform:translateX(3px)}.ds-btn-primary:active{transform:translateY(0)}.ds-btn-primary:focus-visible{outline:2px solid #67edff;outline-offset:5px}"
+    },
+    {
+      "name": "Text Link",
+      "kind": "button",
+      "refersTo": "text-link",
+      "description": "Underlined secondary action with a trailing arrow; turns cyan on hover.",
+      "html": "<a class=\"ds-text-link\" href=\"#\">Ver serviços<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></a>",
+      "css": ".ds-text-link{display:inline-flex;align-items:center;justify-content:space-between;gap:16px;min-height:44px;padding:7px 0;border-bottom:1px solid #293952;color:#f4f8ff;font:600 14px/1.5 Manrope,Arial,sans-serif;text-decoration:none;transition:color .2s,border-color .2s}.ds-text-link svg{width:20px;height:20px}.ds-text-link:hover{color:#67edff;border-color:#67edff}.ds-text-link:focus-visible{outline:2px solid #67edff;outline-offset:5px}"
+    },
+    {
+      "name": "Input Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Dark field with a 2px radius; border turns cyan on focus, salmon when invalid.",
+      "html": "<label class=\"ds-field\">Empresa <span>(opcional)</span><input class=\"ds-input\" type=\"text\" placeholder=\"Nome da empresa\"></label>",
+      "css": ".ds-field{display:flex;flex-direction:column;gap:9px;font:600 13px/1.5 Manrope,Arial,sans-serif;color:#f4f8ff}.ds-field span{font-weight:400;font-size:12px;color:#b1bfd3}.ds-input{width:100%;min-height:49px;padding:12px 14px;background:#0e1b2d;color:#f4f8ff;border:1px solid #5e7799;border-radius:2px;font:400 13px/1.5 Manrope,Arial,sans-serif;caret-color:#67edff}.ds-input::placeholder{color:#a2a9b4;font-size:12px;opacity:1}.ds-input:focus{border-color:#67edff;outline:none}.ds-input:user-invalid{border-color:#ff9a93}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Sticky night header: logo, haze links that turn cyan when current, cyan contact link behind a left rule.",
+      "html": "<header class=\"ds-header\"><a class=\"ds-brand\" href=\"#\">TA Consulting</a><nav class=\"ds-nav\"><a href=\"#\">Serviços</a><a href=\"#\" aria-current=\"page\">Metodologia</a><a href=\"#\">Sobre</a><a href=\"#\">Insights</a></nav><a class=\"ds-contact\" href=\"#\">Vamos conversar<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></a></header>",
+      "css": ".ds-header{display:flex;align-items:center;gap:36px;height:88px;padding:0 32px;background:#080d17;border-bottom:1px solid #263752;font-family:Manrope,Arial,sans-serif}.ds-brand{font:600 21px/1.15 Manrope,Arial,sans-serif;letter-spacing:-.02em;color:#f4f8ff;text-decoration:none}.ds-nav{display:flex;gap:32px;margin-left:auto}.ds-nav a{font-size:14px;color:#b1bfd3;text-decoration:none;padding:12px 0;transition:color .2s}.ds-nav a:hover,.ds-nav a[aria-current]{color:#67edff}.ds-contact{display:flex;align-items:center;gap:22px;padding:6px 0 6px 34px;border-left:1px solid #293952;font-size:13px;font-weight:600;color:#67edff;text-decoration:none}.ds-contact svg{width:22px;height:22px}.ds-contact:hover{color:#b3f7ff}"
+    },
+    {
+      "name": "Chart Switch",
+      "kind": "chip",
+      "refersTo": "chart-switch",
+      "description": "Outlined toggle buttons that fill cyan when pressed; used to swap chart series on the home hero.",
+      "html": "<div class=\"ds-switch\"><button type=\"button\" aria-pressed=\"true\">Leads</button><button type=\"button\" aria-pressed=\"false\">Receita</button></div>",
+      "css": ".ds-switch{display:flex;gap:5px}.ds-switch button{min-height:44px;padding:9px 21px;font:600 13px/1.5 Manrope,Arial,sans-serif;border:1px solid #8bb1ff;background:transparent;color:#f4f8ff;cursor:pointer;transition:background .2s}.ds-switch button:hover{background:#1b419c}.ds-switch button[aria-pressed=true]{background:#67edff;border-color:#67edff;color:#062239}.ds-switch button:focus-visible{outline:2px solid #67edff;outline-offset:5px}"
+    },
+    {
+      "name": "Service Row",
+      "kind": "card",
+      "refersTo": "service-row",
+      "description": "The house container: a rule-separated row with a cyan Barlow name, a bold promise and muted detail; tints on hover.",
+      "html": "<article class=\"ds-row\"><h3>Google Ads</h3><div><p class=\"ds-row-promise\">Estrutura de campanhas ligada ao que a operação consegue atender.</p><p>Pesquisa, Shopping, Performance Max e YouTube com medição ponta a ponta.</p></div></article>",
+      "css": ".ds-row{display:grid;grid-template-columns:.85fr 1.5fr;gap:55px;padding:39px 0;border-top:1px solid #31516c;border-bottom:1px solid #31516c;background:transparent;color:#f4f8ff;font-family:Manrope,Arial,sans-serif;transition:background .3s}.ds-row:hover{background:#10223a}.ds-row h3{margin:0;font:500 clamp(33px,3.3vw,47px)/1.2 Barlow,'Arial Narrow',sans-serif;letter-spacing:-.025em;color:#67edff}.ds-row p{margin:0;font-size:15px;line-height:1.7;color:#b1bfd3;max-width:70ch}.ds-row .ds-row-promise{font-size:16px;font-weight:600;line-height:1.55;color:#f4f8ff;margin-bottom:13px}"
+    },
+    {
+      "name": "WhatsApp Pill",
+      "kind": "button",
+      "refersTo": "whatsapp-float",
+      "description": "Fixed bottom-right WhatsApp link; the only pill and one of the few shadows in the system.",
+      "html": "<a class=\"ds-wa-pill\" href=\"#\"><span>Vamos conversar<span>WhatsApp</span></span><svg viewBox=\"0 0 32 32\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M16 2a14 14 0 0 0-12.1 21L2 30l7.2-1.9A14 14 0 1 0 16 2zm0 25.5a11.5 11.5 0 0 1-5.9-1.6l-.4-.3-4.3 1.1 1.2-4.1-.3-.4A11.5 11.5 0 1 1 16 27.5zm6.3-8.6c-.3-.2-2-1-2.4-1.1-.3-.1-.5-.2-.8.2l-1.1 1.4c-.2.2-.4.3-.7.1a9.4 9.4 0 0 1-4.7-4.1c-.4-.6.4-.6 1-1.9.1-.2.1-.4 0-.6l-1.1-2.6c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4a3.9 3.9 0 0 0-1.2 2.9c0 1.7 1.2 3.4 1.4 3.6.2.2 2.4 3.7 5.9 5.2 2.2.9 3 1 4.1.8.7-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6l-.5-.5z\"/></svg></a>",
+      "css": ".ds-wa-pill{display:inline-flex;align-items:center;gap:15px;min-height:62px;padding:12px 17px 12px 22px;border-radius:32px;background:#25d366;color:#052514;text-decoration:none;box-shadow:0 7px 24px #0005;font-family:Manrope,Arial,sans-serif;transition:transform .2s,background .2s}.ds-wa-pill>span{font-size:13px;font-weight:600;line-height:1.25}.ds-wa-pill>span>span{display:block;font-size:11px;margin-top:4px;font-weight:400}.ds-wa-pill svg{width:34px;height:34px;flex-shrink:0}.ds-wa-pill:hover{background:#55e28a;transform:translateY(-3px)}.ds-wa-pill:focus-visible{outline:2px solid #fff;outline-offset:5px}"
+    },
+    {
+      "name": "Cardápio IA Button",
+      "kind": "button",
+      "refersTo": "ci-button-primary",
+      "description": "4px-radius WhatsApp-green button with a leading glyph; the action colour of the light page.",
+      "html": "<a class=\"ds-ci-btn\" href=\"#\"><svg viewBox=\"0 0 32 32\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M16 2a14 14 0 0 0-12.1 21L2 30l7.2-1.9A14 14 0 1 0 16 2zm0 25.5a11.5 11.5 0 0 1-5.9-1.6l-.4-.3-4.3 1.1 1.2-4.1-.3-.4A11.5 11.5 0 1 1 16 27.5zm6.3-8.6c-.3-.2-2-1-2.4-1.1-.3-.1-.5-.2-.8.2l-1.1 1.4c-.2.2-.4.3-.7.1a9.4 9.4 0 0 1-4.7-4.1c-.4-.6.4-.6 1-1.9.1-.2.1-.4 0-.6l-1.1-2.6c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4a3.9 3.9 0 0 0-1.2 2.9c0 1.7 1.2 3.4 1.4 3.6.2.2 2.4 3.7 5.9 5.2 2.2.9 3 1 4.1.8.7-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6l-.5-.5z\"/></svg>Quero o Cardápio IA</a>",
+      "css": ".ds-ci-btn{display:inline-flex;align-items:center;gap:12px;min-height:56px;padding:12px 26px 12px 20px;border-radius:4px;background:#1fb85a;color:#06301a;font:700 15px/1.2 Manrope,Arial,sans-serif;letter-spacing:.01em;text-decoration:none;transition:background .2s,transform .25s cubic-bezier(.16,1,.3,1)}.ds-ci-btn svg{width:22px;height:22px;flex:none}.ds-ci-btn:hover{background:#1aa550;transform:translateY(-2px)}.ds-ci-btn:focus-visible{outline:3px solid #14181c;outline-offset:3px}"
+    },
+    {
+      "name": "Cardápio IA Compare Switch",
+      "kind": "chip",
+      "refersTo": "ci-switch-tab",
+      "description": "Two-tab housing that swaps the before/after scene; the 'sem' tab selects in ink, the 'com' tab in green.",
+      "html": "<div class=\"ds-ci-switch\" role=\"tablist\"><button type=\"button\" role=\"tab\" aria-selected=\"true\" data-compare=\"sem\">Sem Cardápio IA</button><button type=\"button\" role=\"tab\" aria-selected=\"false\" data-compare=\"com\">Com Cardápio IA</button></div>",
+      "css": ".ds-ci-switch{display:inline-flex;padding:4px;border:1px solid #e4e2dc;border-radius:4px;background:#fff}.ds-ci-switch button{border:0;background:none;padding:12px 22px;border-radius:2px;font:700 14px/1.2 Manrope,Arial,sans-serif;color:#5b626a;cursor:pointer;transition:background .2s,color .2s}.ds-ci-switch button[aria-selected=true]{background:#14181c;color:#fff}.ds-ci-switch button[data-compare=com][aria-selected=true]{background:#1fb85a;color:#06301a}.ds-ci-switch button:focus-visible{outline:3px solid #14181c;outline-offset:2px}"
+    },
+    {
+      "name": "Cardápio IA Chat Bubbles",
+      "kind": "custom",
+      "refersTo": "ci-chat-bubble-in",
+      "description": "WhatsApp-style simulated conversation inside the phone frame; the only rounded element family on the light page.",
+      "html": "<ol class=\"ds-ci-chat\"><li class=\"ds-ci-msg ds-ci-msg-in\"><p>Tem lanche sem cebola?</p><time>20:04</time></li><li class=\"ds-ci-msg ds-ci-msg-out\"><p>Tem sim. O X-Salada e o X-Bacon podem vir sem cebola. Quer que eu anote assim?</p><time>20:04</time></li><li class=\"ds-ci-typing\"><span></span><span></span><span></span></li></ol>",
+      "css": ".ds-ci-chat{list-style:none;margin:0;padding:14px 12px 6px;background:#efe7dd;display:flex;flex-direction:column;gap:8px;font:400 13px/1.4 Manrope,Arial,sans-serif;color:#14181c;border-radius:20px;border:1px solid #e4e2dc;box-shadow:0 18px 40px -20px #14181c55}.ds-ci-msg{position:relative;max-width:86%;padding:8px 10px 18px;border-radius:12px;background:#fff}.ds-ci-msg p{margin:0}.ds-ci-msg time{position:absolute;right:9px;bottom:4px;font-size:10px;color:#6b7280}.ds-ci-msg-in{align-self:flex-start;border-top-left-radius:3px}.ds-ci-msg-out{align-self:flex-end;background:#dcf8c6;border-top-right-radius:3px}.ds-ci-typing{display:flex;align-self:flex-start;gap:4px;padding:10px 12px;border-radius:12px;background:#fff}.ds-ci-typing span{width:6px;height:6px;border-radius:50%;background:#9aa0a6;animation:ds-ci-dot 1s infinite}.ds-ci-typing span:nth-child(2){animation-delay:.15s}.ds-ci-typing span:nth-child(3){animation-delay:.3s}@keyframes ds-ci-dot{0%,80%,100%{transform:translateY(0);opacity:.5}40%{transform:translateY(-4px);opacity:1}}@media(prefers-reduced-motion:reduce){.ds-ci-typing span{animation:none}}"
+    },
+    {
+      "name": "Cardápio IA Price Card",
+      "kind": "card",
+      "refersTo": "ci-price-card",
+      "description": "Green-tinted sticky panel holding the single plan price; the one filled panel on the light page.",
+      "html": "<div class=\"ds-ci-price\"><p class=\"ds-ci-price-value\"><span class=\"ds-ci-currency\">R$</span><span class=\"ds-ci-amount\">99</span><span class=\"ds-ci-period\">/mês</span></p><p class=\"ds-ci-price-note\">Plano único: um número de WhatsApp e um cardápio. Pagamento mensal.</p></div>",
+      "css": ".ds-ci-price{padding:clamp(28px,3vw,44px);background:#e6f8ec;border:1px solid #bfe9cd;color:#14181c;font-family:Manrope,Arial,sans-serif}.ds-ci-price-value{display:flex;align-items:baseline;gap:6px;margin:0 0 14px;line-height:1}.ds-ci-currency{font:500 34px/1 Barlow,'Arial Narrow',sans-serif}.ds-ci-amount{font:500 clamp(84px,9vw,124px)/1 Barlow,'Arial Narrow',sans-serif;letter-spacing:-.05em}.ds-ci-period{font:600 20px/1 Manrope,Arial,sans-serif;color:#5b626a}.ds-ci-price-note{margin:0;font-size:15px;line-height:1.55;color:#5b626a;max-width:30ch}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Systems Schematic",
+    "overview": "The site reads like an acquisition-engineering report drawn on a night-navy sheet: a dense, high-contrast editorial document where content sits in horizontal bands separated by 1px rules, headlines are set in a compressed display face, and a single electric cyan does the pointing. Depth is mostly tonal (navy on deeper navy, a saturated blue band for the system explorer, a cold ice-blue band for the funnel lab); the few shadows that exist are soft glows under the illustrated characters and the floating WhatsApp pill, never hard offsets. Numbers are large, tabular and cyan; prose is small, muted and tightly measured.\n\nOne route lives in daylight. The Cardápio IA landing page (body.cardapio-ia-page) overrides the root tokens to a pure white ground with near-black ink, trades cyan for WhatsApp green as the action colour and adds tomato orange as the colour of the dinner rush. It keeps the same two typefaces, the same 1320px container, the same section rhythm and the same 1px-rule sectioning, so it still reads as this house; it simply flips the sheet from navy to white. Its one licensed exception to the flat language is the floating phone frame in the hero (20px radius, soft shadow) and the chat bubbles inside it (12px radius); every other control on the page is a 4px or sharper corner.\n\nConfirmed rejections carried from the product brief and the build: no SaaS template, no card mosaics, no glass or frosted surfaces, no purple gradients. Illustrations are flat vector scenes with thick outlines; no photography, no portrait of Tony.",
+    "keyCharacteristics": [
+      "Night-navy ground, off-white ink, one cyan accent that owns every \"look here\" moment",
+      "Barlow Semi Condensed 500 for every heading and big number; Manrope for all running text and controls",
+      "Horizontal editorial bands and 1px rules instead of cards; filled colour bands only for the system explorer, the lab, the closing CTA and the automation strip",
+      "Square or 2px corners on controls; radius appears only on the chart stage (16px), funnel bars (10px) and the WhatsApp pill (32px)",
+      "Cardápio IA variant: white ground, green action, orange rush, 4px control radius, rounded phone and chat bubbles as the single curved element family",
+      "Charts are inline SVG with thick bars, labelled axes and a visible \"simulação\" disclosure under every title"
+    ],
+    "rules": [
+      { "name": "The One Signal Rule", "body": "On dark routes, cyan is the only accent. Green exists only as the WhatsApp pill and the positive status line; orange and purple do not exist.", "section": "colors" },
+      { "name": "The Sides Rule", "body": "On Cardápio IA, green always means \"with Cardápio IA\" and orange always means \"the rush without it\". A chart, bullet, bar or scene never swaps them.", "section": "colors" },
+      { "name": "The Token Alias Rule", "body": "The Cardápio IA scope remaps --blue, --action and --blue-text to greens so inherited header, footer and link styles stay coherent. New Cardápio IA styles must reference the --green* and --orange* names, never the blue names.", "section": "colors" },
+      { "name": "The Barlow-Means-Hierarchy Rule", "body": "Barlow appears only on headings, big numbers, chart titles and the in-chart \"hora do rush\" annotation. Running text, controls and labels are always Manrope.", "section": "typography" },
+      { "name": "The Second-Line Accent Rule", "body": "A multi-line heading accents its closing line (cyan on dark, green on Cardápio IA) with a span; the accent never lands on the first line.", "section": "typography" },
+      { "name": "The Small Muted Prose Rule", "body": "Descriptive paragraphs are 15px Haze under a 16px Paper promise; body text rarely exceeds 17px except article bodies and Cardápio IA leads.", "section": "typography" },
+      { "name": "The Float-Only Shadow Rule", "body": "A shadow is permitted only on an element that literally floats over other content (the WhatsApp pill, the hero phone) or on an illustrated figure standing on the sheet. Rows, panels, cards, inputs and buttons are flat.", "section": "elevation" },
+      { "name": "The Band-Not-Card Rule", "body": "Change the background of a whole section to mark a shift in register; never box individual items.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep cyan (#67edff) as the only accent on dark routes and use it for the headline span, metric values and the primary button.",
+      "Do separate content with 1px rules (#293952 dark, #e4e2dc light) and change whole-section backgrounds to shift register.",
+      "Do set every heading and big number in Barlow Semi Condensed 500 with negative tracking, and everything else in Manrope.",
+      "Do keep buttons square (0 radius) on dark routes and 4px on Cardápio IA, with a right-side arrow or left-side WhatsApp glyph.",
+      "Do label every chart as a simulation in its caption and provide an aria-label that states the takeaway.",
+      "Do keep green = \"com Cardápio IA\" and orange = \"the rush\" on the light page, in bars, bullets, scenes and tabs alike.",
+      "Do honour prefers-reduced-motion by removing bubble transitions, panel entrances, line draws and hover lifts."
+    ],
+    "donts": [
+      "Don't box content into card mosaics or add shadows to rows, panels, inputs or buttons; shadows belong only to floating elements and illustrated figures.",
+      "Don't use glass, blur or purple gradients; the only gradients are the navy hero backdrop and the deep-blue chart stage.",
+      "Don't reach for photography or a portrait; illustrations are flat vector with thick outlines.",
+      "Don't round anything on Cardápio IA beyond 4px except the phone frame and chat bubbles.",
+      "Don't use orange, purple or a second green on dark routes; the WhatsApp pill is the only green there.",
+      "Don't let the Cardápio IA light theme leak: every light override is scoped to body.cardapio-ia-page."
+    ]
+  }
+}
