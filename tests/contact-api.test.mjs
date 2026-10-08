@@ -50,7 +50,14 @@ test('Bloqueia origem de outro domínio', async () => {
 test('Falha do n8n ou configuração ausente devolve erro para o fallback por e-mail', async () => {
   assert.equal((await handle(request(valid), env, recorder(500).send)).status, 502);
   assert.equal((await handle(request(valid), env, async () => { throw new Error('timeout'); })).status, 502);
-  assert.equal((await handle(request(valid), {}, recorder().send)).status, 503);
+});
+
+test('Sem variáveis, usa o webhook padrão e não envia header de segredo', async () => {
+  const { calls, send } = recorder();
+  const res = await handle(request(valid), {}, send);
+  assert.equal(res.status, 200);
+  assert.equal(calls[0].url, 'https://webhook.tonyananias.com.br/webhook/ta-contato');
+  assert.equal(calls[0].init.headers['X-TA-Secret'], undefined);
 });
 
 test('Limita o tamanho dos campos', async () => {

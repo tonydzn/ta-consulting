@@ -1,9 +1,12 @@
 // Recebe o formulário de /contato/, valida e repassa ao webhook do n8n,
 // que envia a mensagem ao WhatsApp comercial via Evolution API.
 //
-// Variáveis de ambiente (Vercel → Settings → Environment Variables):
-//   N8N_WEBHOOK_URL     URL de produção do nó Webhook no n8n
-//   N8N_WEBHOOK_SECRET  valor enviado no header X-TA-Secret (o mesmo da credencial Header Auth no n8n)
+// Destino padrão: webhook de produção do n8n da TA Consulting.
+// Variáveis de ambiente opcionais (Vercel → Settings → Environment Variables):
+//   N8N_WEBHOOK_URL     substitui o webhook padrão
+//   N8N_WEBHOOK_SECRET  se definido, vai no header X-TA-Secret (use com Header Auth no nó Webhook)
+
+export const DEFAULT_WEBHOOK_URL = 'https://webhook.tonyananias.com.br/webhook/ta-contato';
 
 const limits = { name: 120, email: 254, company: 160, phone: 30, challenge: 1800 };
 const required = ['name', 'email', 'challenge'];
@@ -47,15 +50,14 @@ export async function handle(request, env = process.env, send = fetch) {
   const { data, error } = validate(body);
   if (error) return json(422, { ok: false, error });
 
-  if (!env.N8N_WEBHOOK_URL || !env.N8N_WEBHOOK_SECRET) {
-    console.error('contato: N8N_WEBHOOK_URL ou N8N_WEBHOOK_SECRET não configurado');
-    return json(503, { ok: false, error: 'Envio indisponível no momento.' });
-  }
+  const webhookUrl = env.N8N_WEBHOOK_URL || DEFAULT_WEBHOOK_URL;
+  const headers = { 'Content-Type': 'application/json' };
+  if (env.N8N_WEBHOOK_SECRET) headers['X-TA-Secret'] = env.N8N_WEBHOOK_SECRET;
 
   try {
-    const response = await send(env.N8N_WEBHOOK_URL, {
+    const response = await send(webhookUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-TA-Secret': env.N8N_WEBHOOK_SECRET },
+      headers,
       body: JSON.stringify({ ...data, submittedAt: new Date().toISOString(), userAgent: clean(request.headers.get('user-agent'), 300) }),
       signal: AbortSignal.timeout(10000),
     });

@@ -1,6 +1,8 @@
 # Formulário do site → WhatsApp
 
-Fluxo: `/contato/` → `POST /api/contato` (Vercel Function) → webhook do n8n → Evolution API → WhatsApp comercial **(18) 98103-4411**.
+Fluxo: `/contato/` → `POST /api/contato` (Vercel Function) → `https://webhook.tonyananias.com.br/webhook/ta-contato` (n8n) → Evolution API → WhatsApp comercial **(18) 98103-4411**.
+
+O webhook já está definido no código (`DEFAULT_WEBHOOK_URL` em `api/contato.mjs`); não é preciso configurar nada na Vercel para funcionar.
 
 ```
 Visitante ──► /api/contato (Vercel)          ──► n8n Webhook ──► Montar mensagem ──► Evolution sendText ──► WhatsApp
@@ -11,42 +13,32 @@ Visitante ──► /api/contato (Vercel)          ──► n8n Webhook ──�
 Se qualquer etapa falhar, o formulário não perde o lead: mostra a mensagem pronta para enviar por e-mail ou copiar.
 No sucesso, dispara `generate_lead` no dataLayer (GTM) e leva para `/obrigado/`.
 
-## 1. Gerar o segredo compartilhado
+## 1. Segredo (opcional, recomendado)
 
-Qualquer string longa e aleatória. Exemplo no terminal:
-
-```
-openssl rand -hex 32
-```
-
-Esse valor vai em dois lugares: na credencial do n8n e na variável da Vercel.
+Para que só o site consiga disparar o webhook, gere uma string aleatória (`openssl rand -hex 32`), coloque-a na variável `N8N_WEBHOOK_SECRET` da Vercel e ative Header Auth no nó Webhook (Name `X-TA-Secret`, Value = o segredo). Sem isso, o webhook funciona sem autenticação.
 
 ## 2. n8n
 
 1. **Workflows → Import from file** → `automations/n8n-formulario-whatsapp.json`.
-2. Nó **Webhook formulário** → Credential for Header Auth → criar nova:
-   - Name: `X-TA-Secret`
-   - Value: o segredo do passo 1
+2. Nó **Webhook formulário**: path `ta-contato`, método POST. (Header Auth só se usar o segredo do passo 1.)
 3. Nó **Evolution — enviar texto**:
    - URL: troque `https://SEU-EVOLUTION` e `SUA-INSTANCIA` pela URL do seu servidor Evolution e o nome da instância conectada ao WhatsApp que vai **enviar** o aviso.
    - Credential (Header Auth): Name `apikey`, Value = API key da Evolution (global ou da instância).
 4. Nó **Montar mensagem**: o destino está na constante `DESTINO = '5518981034411'`. Troque se quiser receber em outro número.
-5. Salve e **ative** o workflow. Copie a **Production URL** do nó Webhook (termina em `/webhook/ta-contato`).
+5. Salve e **ative** o workflow. A Production URL deve ser `https://webhook.tonyananias.com.br/webhook/ta-contato`.
 
 > A instância que envia precisa ser um número diferente do que recebe — o WhatsApp não entrega mensagem de um número para ele mesmo como notificação. Se a Evolution estiver conectada no próprio (18) 98103-4411, mande para outro número seu ou para um grupo (use o JID do grupo, `...@g.us`, em `DESTINO`).
 
 O corpo segue a Evolution API v2 (`{ number, text }`). Na v1 o formato é `{ number, textMessage: { text } }` — ajuste o JSON Body do nó se for o caso.
 
-## 3. Vercel
+## 3. Vercel (opcional)
 
-Project → Settings → Environment Variables (Production e Preview):
-
-| Nome | Valor |
+| Nome | Quando usar |
 | --- | --- |
-| `N8N_WEBHOOK_URL` | Production URL do webhook |
-| `N8N_WEBHOOK_SECRET` | o segredo do passo 1 |
+| `N8N_WEBHOOK_URL` | só para trocar o webhook padrão (ex.: usar a URL de teste) |
+| `N8N_WEBHOOK_SECRET` | se ativar Header Auth no n8n |
 
-Faça um novo deploy depois de salvar as variáveis.
+Depois de mudar variáveis, faça um novo deploy.
 
 ## 4. Testar
 
@@ -58,8 +50,7 @@ curl -X POST https://tonyananias.com.br/api/contato \
 
 Resposta esperada: `{"ok":true}` e a mensagem no WhatsApp. Erros comuns:
 
-- `503` → variáveis da Vercel ausentes (ou deploy feito antes de criá-las).
-- `502` → n8n recusou (segredo diferente, workflow inativo) ou Evolution falhou. Veja Executions no n8n.
+- `502` → n8n recusou (workflow inativo, segredo diferente) ou Evolution falhou. Veja Executions no n8n.
 
 ## 5. Conversão no GTM / Meta
 
