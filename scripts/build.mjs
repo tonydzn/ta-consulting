@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { site, services, categories, segments } from '../src/site.mjs';
 import { home, servicesPage, servicePage, serviceAudiencePage, segmentPage, aboutPage, insightsPage, contactPage, thankYouPage, articlePage, privacyPage, notFoundPage } from '../src/pages.mjs';
 import { escape } from '../src/components.mjs';
+import { cardapioPage } from '../src/cardapio-ia.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export function publishedArticles(articles) {
@@ -33,7 +34,7 @@ export function createPages(articles = []) {
   return new Map([
     ['/',home()],['/servicos/',servicesPage()],...services.map(s=>[`/${s.slug}/`,servicePage(s)]),...services.flatMap(service=>segments.map(segment=>[`/${service.slug}/${segment.slug}/`,serviceAudiencePage(service,segment)])),...segments.map(segment=>[`/${segment.slug}/`,segmentPage(segment)]),
     ['/sobre/',aboutPage()],['/insights/',insightsPage(published)],['/contato/',contactPage()],['/obrigado/',thankYouPage()],
-    ['/regiao-presidente-prudente/',regionalPage()],['/privacidade/',privacyPage()],...published.map(a=>[`/insights/${a.slug}/`,articlePage(a)]),
+    ['/regiao-presidente-prudente/',regionalPage()],['/privacidade/',privacyPage()],['/cardapio-ia/',cardapioPage()],...published.map(a=>[`/insights/${a.slug}/`,articlePage(a)]),
   ]);
 }
 
@@ -55,8 +56,8 @@ export async function build() {
     await writeFile(dest,html);
   }
   await writeFile(resolve(out,'404.html'),notFoundPage());
-  await writeFile(resolve(out,'assets/site.css'),(await readFile(resolve(root,'src/styles.css'),'utf8'))+'\n'+(await readFile(resolve(root,'src/experience.css'),'utf8')));
-  await writeFile(resolve(out,'assets/site.js'),(await readFile(resolve(root,'src/client.js'),'utf8'))+'\n'+(await readFile(resolve(root,'src/experience.js'),'utf8')));
+  await writeFile(resolve(out,'assets/site.css'),(await readFile(resolve(root,'src/styles.css'),'utf8'))+'\n'+(await readFile(resolve(root,'src/experience.css'),'utf8'))+'\n'+(await readFile(resolve(root,'src/cardapio-ia.css'),'utf8')));
+  await writeFile(resolve(out,'assets/site.js'),(await readFile(resolve(root,'src/client.js'),'utf8'))+'\n'+(await readFile(resolve(root,'src/experience.js'),'utf8'))+'\n'+(await readFile(resolve(root,'src/cardapio-ia.js'),'utf8')));
   const urls=indexableRoutes(pages).map(path=>`  <url><loc>${escape(site.origin+path)}</loc></url>`).join('\n');
   await writeFile(resolve(out,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
   await writeFile(resolve(out,'robots.txt'),`User-agent: *\nAllow: /\n\nSitemap: ${site.origin}/sitemap.xml\n`);
