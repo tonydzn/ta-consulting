@@ -32,12 +32,12 @@ try {
   }
   await page.setViewportSize({width:390,height:900});
   await page.goto(base+'/contato/');
-  await page.getByRole('button',{name:'Preparar solicitação'}).click();
+  await page.getByRole('button',{name:'Enviar solicitação'}).click();
   assert(!await page.locator('#form-result').isVisible());
   const fields={name:'QA — não enviar',company:'Empresa & Cia',email:'qa@example.com',challenge:'Mensurar contatos <teste>'};
   for(const [id,value] of Object.entries(fields))await page.locator('#'+id).fill(value);
-  await page.getByRole('button',{name:'Preparar solicitação'}).click();
-  assert(await page.locator('#form-result').isVisible());
+  await page.getByRole('button',{name:'Enviar solicitação'}).click();
+  await page.locator('#form-result').waitFor();assert(await page.locator('#form-result').isVisible());
   const mail=new URL(await page.locator('#email-draft').getAttribute('href'));
   assert.equal(mail.pathname,'tony.ananias@gmail.com');
   for(const value of Object.values(fields))assert(mail.searchParams.get('body').includes(value));
@@ -47,7 +47,7 @@ try {
   assert((await page.locator('#copy-status').textContent()).includes('não permitiu'));
   await page.locator('#challenge').fill('Novo desafio');
   assert(!await page.locator('#form-result').isVisible());
-  await page.getByRole('button',{name:'Preparar solicitação'}).click();
+  await page.getByRole('button',{name:'Enviar solicitação'}).click();
   await page.evaluate(()=>{document.activeElement?.blur();window.scrollTo({top:0,behavior:'instant'});});
   await page.screenshot({path:'.impeccable/review/contact-completion-390.png',fullPage:true});
   const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();

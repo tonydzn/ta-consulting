@@ -94,17 +94,48 @@
     trackConversion('Contact', 'whatsapp_click', { content_name: 'WhatsApp', page_path: location.pathname });
   }, { capture: true });
 
+  // Guarda UTMs/click IDs da entrada no site para acompanhar a origem do lead no formulário.
+  const utmKeys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'];
+  try {
+    const params = new URLSearchParams(location.search);
+    const found = Object.fromEntries(utmKeys.filter(key => params.get(key)).map(key => [key, params.get(key)]));
+    if (Object.keys(found).length) sessionStorage.setItem('ta_utm', JSON.stringify(found));
+  } catch {}
+  const storedUtm = () => { try { return JSON.parse(sessionStorage.getItem('ta_utm') || '{}'); } catch { return {}; } };
+
   const form = document.querySelector('#contact-form');
   if (form) {
     let leadTracked = false;
-    form.addEventListener('submit', event => {
+    const submit = form.querySelector('[type=submit]');
+    const submitLabel = submit.firstChild.textContent;
+    const formStatus = document.querySelector('#form-status');
+    form.addEventListener('submit', async event => {
       event.preventDefault();
+      if (submit.getAttribute('aria-busy') === 'true') return;
       if (!form.reportValidity()) return;
       if (!leadTracked) {
         leadTracked = true;
         trackConversion('Lead', 'generate_lead', { content_name: 'Formulário de contato', page_path: location.pathname });
       }
       const data = new FormData(form);
+      const payload = Object.fromEntries(['name','company','email','phone','challenge','website'].map(key => [key, String(data.get(key) || '').trim()]));
+      submit.setAttribute('aria-busy','true');
+      submit.disabled = true;
+      submit.firstChild.textContent = 'Enviando… ';
+      formStatus.textContent = 'Enviando sua solicitação.';
+      try {
+        const response = await fetch('/api/contato', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...payload, page:location.pathname, utm:storedUtm()})});
+        const body = await response.json().catch(() => ({}));
+        if (response.ok && body.ok) {
+          formStatus.textContent = 'Solicitação enviada.';
+          setTimeout(() => location.assign('/obrigado/'), 300);
+          return;
+        }
+      } catch {}
+      submit.removeAttribute('aria-busy');
+      submit.disabled = false;
+      submit.firstChild.textContent = submitLabel;
+      formStatus.textContent = '';
       const labels = {name:'Nome',company:'Empresa',email:'E-mail',phone:'WhatsApp',challenge:'Como podemos ajudar?'};
       const text = Object.entries(labels).map(([key,label])=>`${label}: ${String(data.get(key) || 'Não informado').trim()}`).join('\n\n');
       const result = document.querySelector('#form-result');
