@@ -11,7 +11,7 @@ Visitante ──► /api/contato (Vercel)          ──► n8n Webhook ──�
 ```
 
 Se qualquer etapa falhar, o formulário não perde o lead: mostra a mensagem pronta para enviar por e-mail ou copiar.
-No sucesso, dispara `generate_lead` no dataLayer (GTM) e leva para `/obrigado/`.
+No envio válido, dispara `Lead` no Meta Pixel e `generate_lead` no dataLayer; no sucesso, leva para `/obrigado/`.
 
 ## 1. Segredo (opcional, recomendado)
 
@@ -54,4 +54,4 @@ Resposta esperada: `{"ok":true}` e a mensagem no WhatsApp. Erros comuns:
 
 ## 5. Conversão no GTM / Meta
 
-Crie no GTM um acionador de Evento personalizado `generate_lead` e use-o na tag de Lead do Meta Pixel / conversão do Google Ads. UTMs, `fbclid` e `gclid` da primeira página visitada na sessão também chegam na mensagem do WhatsApp.
+O evento `Lead` do Meta Pixel já é disparado pelo próprio site (`fbq`) no envio válido do formulário, uma vez por página, junto com `generate_lead` no dataLayer. Não crie outra tag de Lead do Pixel no GTM para esse evento, ou a conversão conta em dobro. Use `generate_lead` no GTM só para outras plataformas (ex.: conversão do Google Ads). UTMs, `fbclid` e `gclid` da primeira página visitada na sessão também chegam na mensagem do WhatsApp.
