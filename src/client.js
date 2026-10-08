@@ -79,11 +79,31 @@
     });
   });
 
+  // Conversões: Meta Pixel (carregado pelo GTM) + dataLayer para o próprio GTM.
+  function trackConversion(metaEvent, gtmEvent, params = {}) {
+    try {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: gtmEvent, ...params });
+      if (typeof window.fbq === 'function') window.fbq('track', metaEvent, params);
+    } catch { /* rastreamento nunca deve quebrar a página */ }
+  }
+
+  document.addEventListener('click', event => {
+    const link = event.target.closest?.('a[href*="wa.me/"], a[href*="api.whatsapp.com"], a[href^="whatsapp:"]');
+    if (!link) return;
+    trackConversion('Contact', 'whatsapp_click', { content_name: 'WhatsApp', page_path: location.pathname });
+  }, { capture: true });
+
   const form = document.querySelector('#contact-form');
   if (form) {
+    let leadTracked = false;
     form.addEventListener('submit', event => {
       event.preventDefault();
       if (!form.reportValidity()) return;
+      if (!leadTracked) {
+        leadTracked = true;
+        trackConversion('Lead', 'generate_lead', { content_name: 'Formulário de contato', page_path: location.pathname });
+      }
       const data = new FormData(form);
       const labels = {name:'Nome',company:'Empresa',email:'E-mail',phone:'WhatsApp',challenge:'Como podemos ajudar?'};
       const text = Object.entries(labels).map(([key,label])=>`${label}: ${String(data.get(key) || 'Não informado').trim()}`).join('\n\n');
