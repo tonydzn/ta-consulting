@@ -4,9 +4,11 @@
 // Destino padrão: webhook de produção do n8n da TA Consulting.
 // Variáveis de ambiente opcionais (Vercel → Settings → Environment Variables):
 //   N8N_WEBHOOK_URL     substitui o webhook padrão
-//   N8N_WEBHOOK_SECRET  se definido, vai no header X-TA-Secret (use com Header Auth no nó Webhook)
+//   N8N_WEBHOOK_SECRET  se definido, vai no header de autenticação (use com Header Auth no nó Webhook)
+//   N8N_WEBHOOK_SECRET_HEADER  nome do header (padrão X-TA-Secret; use o Name da credencial Header Auth do n8n)
 
 export const DEFAULT_WEBHOOK_URL = 'https://webhook.tonyananias.com.br/webhook/ta-contato';
+export const DEFAULT_SECRET_HEADER = 'X-TA-Secret';
 
 const limits = { name: 120, email: 254, company: 160, phone: 30, challenge: 1800 };
 const required = ['name', 'email', 'challenge'];
@@ -52,7 +54,7 @@ export async function handle(request, env = process.env, send = fetch) {
 
   const webhookUrl = env.N8N_WEBHOOK_URL || DEFAULT_WEBHOOK_URL;
   const headers = { 'Content-Type': 'application/json' };
-  if (env.N8N_WEBHOOK_SECRET) headers['X-TA-Secret'] = env.N8N_WEBHOOK_SECRET;
+  if (env.N8N_WEBHOOK_SECRET) headers[(env.N8N_WEBHOOK_SECRET_HEADER || DEFAULT_SECRET_HEADER).trim()] = env.N8N_WEBHOOK_SECRET;
 
   try {
     const response = await send(webhookUrl, {

@@ -17,6 +17,8 @@ No envio válido, dispara `Lead` no Meta Pixel e `generate_lead` no dataLayer; n
 
 Para que só o site consiga disparar o webhook, gere uma string aleatória (`openssl rand -hex 32`), coloque-a na variável `N8N_WEBHOOK_SECRET` da Vercel e ative Header Auth no nó Webhook (Name `X-TA-Secret`, Value = o segredo). Sem isso, o webhook funciona sem autenticação.
 
+Se a credencial Header Auth do n8n usar outro Name (ex.: `apikey`), defina também `N8N_WEBHOOK_SECRET_HEADER` na Vercel com esse mesmo nome. O Value da credencial precisa ser igual a `N8N_WEBHOOK_SECRET`.
+
 ## 2. n8n
 
 1. **Workflows → Import from file** → `automations/n8n-formulario-whatsapp.json`.
@@ -37,6 +39,7 @@ O corpo segue a Evolution API v2 (`{ number, text }`). Na v1 o formato é `{ num
 | --- | --- |
 | `N8N_WEBHOOK_URL` | só para trocar o webhook padrão (ex.: usar a URL de teste) |
 | `N8N_WEBHOOK_SECRET` | se ativar Header Auth no n8n |
+| `N8N_WEBHOOK_SECRET_HEADER` | se o Name da credencial Header Auth não for `X-TA-Secret` (ex.: `apikey`) |
 
 Depois de mudar variáveis, faça um novo deploy.
 

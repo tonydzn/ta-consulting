@@ -65,3 +65,10 @@ test('Limita o tamanho dos campos', async () => {
   await handle(request({ ...valid, challenge: 'a'.repeat(5000) }), env, send);
   assert.equal(JSON.parse(calls[0].init.body).challenge.length, 1800);
 });
+
+test('N8N_WEBHOOK_SECRET_HEADER troca o nome do header do segredo', async () => {
+  const { calls, send } = recorder();
+  await handle(request(valid), { ...env, N8N_WEBHOOK_SECRET_HEADER: 'apikey' }, send);
+  assert.equal(calls[0].init.headers['apikey'], 's3cr3t');
+  assert.equal(calls[0].init.headers['X-TA-Secret'], undefined);
+});
