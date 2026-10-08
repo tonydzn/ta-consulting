@@ -14,7 +14,7 @@ export function platformStrip() {
     ['Google Analytics', 'Entenda de onde vêm os contatos', '/analytics-tracking/', 'analytics'],
     ['WhatsApp + CRM', 'Do primeiro contato ao atendimento', '/automacao/', 'crm'],
   ];
-  return `<section class="platform-section container" aria-labelledby="platform-heading"><div class="platform-heading"><h2 id="platform-heading">Sua empresa nos canais certos.</h2><p>Plataformas e competências conectadas ao seu negócio.</p></div><ul class="platform-strip">${platforms.map(([name,description,url,tone])=>`<li><a href="${url}" class="platform-badge platform-${tone}"><strong>${name}</strong><span>${description}</span>${arrow}</a></li>`).join('')}</ul><div class="partner-placeholders" aria-label="Espaços reservados para selos oficiais"><p>Selos e certificações</p><div><span><strong>Google Partner</strong><small>Selo oficial a inserir</small></span><span><strong>Meta</strong><small>Selo oficial a inserir</small></span><span><strong>TikTok</strong><small>Selo oficial a inserir</small></span></div></div><p class="platform-history"><a href="/sobre/#certificacoes">Google Partner por seis anos consecutivos no histórico profissional de Tony. Conheça a trajetória ${arrow}</a></p></section>`;
+  return `<section class="platform-section container" aria-labelledby="platform-heading"><div class="platform-heading"><h2 id="platform-heading">Sua empresa nos canais certos.</h2><p>Plataformas e competências conectadas ao seu negócio.</p></div><ul class="platform-strip">${platforms.map(([name,description,url,tone])=>`<li><a href="${url}" class="platform-badge platform-${tone}"><strong>${name}</strong><span>${description}</span>${arrow}</a></li>`).join('')}</ul></section>`;
 }
 
 export function localSection() {
